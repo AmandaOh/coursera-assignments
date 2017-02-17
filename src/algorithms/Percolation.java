@@ -22,8 +22,8 @@ public class Percolation {
 		uf = new WeightedQuickUnionUF(n*n + 2);
 		grid= new boolean[gridSize + 2];
 		Arrays.fill(grid, blocked);
-		topSite = gridSize + 1;
-		bottomSite = gridSize + 2;
+		topSite = gridSize;
+		bottomSite = gridSize + 1;
 	}
 	
 	private boolean withinBounds(int row, int col) {
@@ -125,6 +125,10 @@ public class Percolation {
 		return openSitesCount;
 	}
 	
+	public boolean percolates() {
+		return uf.connected(bottomSite, topSite);
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int gridSize = 5;
@@ -136,8 +140,11 @@ public class Percolation {
 		testGrid.open(2, 1);
 		testGrid.open (2, 2);
 		testGrid.open(4, 3);
+		testGrid.open(5, 3);
+		testGrid.open(3, 3);
 		System.out.println(testGrid.isFull(2, 2));
 		System.out.println(testGrid.numberOfOpenSites());
+		System.out.println(testGrid.percolates());
 	}
 
 }
