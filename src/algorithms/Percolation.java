@@ -14,6 +14,7 @@ public class Percolation {
 	private int gridIndex;
 	private int topSite;
 	private int bottomSite;
+	private int openSitesCount;
 
 	public Percolation(int n) {
 		N = n;
@@ -89,16 +90,21 @@ public class Percolation {
 		withinBounds(givenRow, givenCol);
 		// row and column indices are integers between 1 and n
 		gridIndex = findIndex(givenRow, givenCol);
-		grid[gridIndex] = open;
-		//union with virtual top and bottom node for top and bottom rows
-		if (givenRow == 1) {
-			uf.union(gridIndex, topSite);
-		} else if (givenRow == N) {
-			uf.union(gridIndex, bottomSite);
-		}
-		//union with neighboring up, right, bottom, left opened cells
-		for (int i = 0; i < 4; i++){
-			formUnion(givenRow, givenCol, i);
+		if (grid[gridIndex] == open) {
+			return;
+		} else {
+			grid[gridIndex] = open;
+			openSitesCount += 1;
+			//union with virtual top and bottom node for top and bottom rows
+			if (givenRow == 1) {
+				uf.union(gridIndex, topSite);
+			} else if (givenRow == N) {
+				uf.union(gridIndex, bottomSite);
+			}
+			//union with neighboring up, right, bottom, left opened cells
+			for (int i = 0; i < 4; i++){
+				formUnion(givenRow, givenCol, i);
+			}
 		}
 	}
 	
@@ -115,6 +121,10 @@ public class Percolation {
 		return uf.connected(gridIndex, topSite);
 	}
 	
+	public int numberOfOpenSites() {
+		return openSitesCount;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int gridSize = 5;
@@ -125,7 +135,9 @@ public class Percolation {
 		testGrid.open(3, 2);
 		testGrid.open(2, 1);
 		testGrid.open (2, 2);
-		System.out.println(testGrid.isFull(4, 2));
+		testGrid.open(4, 3);
+		System.out.println(testGrid.isFull(2, 2));
+		System.out.println(testGrid.numberOfOpenSites());
 	}
 
 }
