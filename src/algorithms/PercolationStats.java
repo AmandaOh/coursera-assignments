@@ -44,12 +44,21 @@ public class PercolationStats {
 	public double stddev() {
 		return StdStats.stddev(resultsArray);
 	}
+	
+	public double confidenceLo()  {
+		return mean() - ((1.96 * stddev())/Math.sqrt(trials));
+	}
+	
+	public double confidenceHi() {
+		return mean() + ((1.96 * stddev())/Math.sqrt(trials));
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		PercolationStats test = new PercolationStats (5, 3);
-		System.out.println("sample mean of percolation threshold " + test.mean());
-		System.out.println("sample standard deviation of percolation threshold " + test.stddev());
+		PercolationStats test = new PercolationStats (8, 10);
+		System.out.println("sample's mean of percolation threshold =" + test.mean());
+		System.out.println("sample's standard deviation of percolation threshold =" + test.stddev());
+		System.out.println("sample's 95% confidence interval= " + "[" + test.confidenceLo() + ", " + test.confidenceHi() + "]");
 	}
 
 }

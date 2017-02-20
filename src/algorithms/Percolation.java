@@ -50,7 +50,6 @@ public class Percolation {
 				if(row >= 2){
 					if (isOpen(row - 1, col)) {
 						uf.union(gridIndex, findIndex(row - 1, col));
-						System.out.println("union with top cell");
 					}
 				}
 				break;
@@ -59,7 +58,6 @@ public class Percolation {
 				if(col <= (N - 1)){
 					if (isOpen(row, col + 1)){
 						uf.union(gridIndex, findIndex(row, col + 1));
-						System.out.println("union with right cell");
 					}
 				}
 				break;
@@ -68,7 +66,6 @@ public class Percolation {
 				if(row <= (N - 1)){
 					if (isOpen(row + 1, col)) {
 						uf.union(gridIndex, findIndex(row + 1, col));
-						System.out.println("union with bottom cell");
 					}
 				}
 				break;
@@ -77,7 +74,6 @@ public class Percolation {
 				if(col >= 2){
 					if (isOpen(row, col - 1)){
 						uf.union(gridIndex, findIndex(row, col - 1));
-						System.out.println("union with left cell");
 					}
 				}
 				break;
@@ -129,22 +125,5 @@ public class Percolation {
 		return uf.connected(bottomSite, topSite);
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		int gridSize = 5;
-		
-		Percolation testGrid = new Percolation(gridSize);
-		testGrid.open(1, 2);
-		testGrid.open(2, 3);
-		testGrid.open(3, 2);
-		testGrid.open(2, 1);
-		testGrid.open (2, 2);
-		testGrid.open(4, 3);
-		testGrid.open(5, 3);
-		testGrid.open(3, 3);
-		System.out.println(testGrid.isFull(2, 2));
-		System.out.println(testGrid.numberOfOpenSites());
-		System.out.println(testGrid.percolates());
-	}
 
 }
