@@ -1,11 +1,11 @@
-package algorithms;
+
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 	
-	public final int N;
+	private final int N;
 	private WeightedQuickUnionUF uf;
 	private static final boolean open = true;
 	private static final boolean blocked = false;
