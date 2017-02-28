@@ -65,22 +65,27 @@ public class Deque<Item> implements Iterable<Item> {
 	
 	public Item removeFirst() {
 		if (isEmpty()) {throw new java.util.NoSuchElementException("list is empty!");}
-		else {
-			Item item = first.item;
-			first = first.next;
+		Item item = first.item;
+		first = first.next;
+		if(first != null){
 			first.previous = null;
-			return item;
+		} else {
+			last = null;
 		}
+		return item;
+
 	}
 	
 	public Item removeLast() {
 		if (isEmpty()) {throw new java.lang.UnsupportedOperationException("list is empty!");}
-		else {
-			Item item = last.item;
-			last = last.previous;
+		Item item = last.item;
+		last = last.previous;
+		if(last != null) {
 			last.next = null;
-			return item;
+		} else {
+			first = null;
 		}
+		return item;
 	}
 	
 	public Iterator<Item> iterator() {
@@ -110,11 +115,9 @@ public class Deque<Item> implements Iterable<Item> {
 	
 	public static void main(String[] args) {
 		Deque<String> d = new Deque<String>();
-		d.addFirst("Hey");
-		d.addFirst("Hello");
-		d.addLast("World");
-		d.addLast("stranger");
-		d.addFirst("things");
+		for(int i=0; i< args.length; i++){
+			d.addFirst(args[i]);
+		}
 		
 		Iterator<String> dq = d.iterator();
 		
