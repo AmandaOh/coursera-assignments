@@ -1,9 +1,10 @@
 import java.util.Iterator;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 	
 	private Item[] queue;
-	public int capacity;
+	private int capacity;
 	private int size;
 
 	public static void main(String[] args) {
@@ -80,6 +81,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	}
 	
 	public Item sample() {
+		if(isEmpty()){throw new java.util.NoSuchElementException();}
 		return queue[StdRandom.uniform(size)];
 	}
 
