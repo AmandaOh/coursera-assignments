@@ -2,27 +2,11 @@ import java.util.Iterator;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
-	
+    
 	private Item[] queue;
 	private int capacity;
 	private int size;
 
-	public static void main(String[] args) {
-//		System.out.println(StdRandom.uniform(9));
-		RandomizedQueue<String> q = new RandomizedQueue<String> (); 
-		q.enqueue("Hello");
-		q.enqueue("World");
-		q.enqueue("Hey");
-		q.enqueue("Test");
-		q.enqueue("think");
-		q.dequeue();
-		Iterator<String> r = q.iterator();
-		while(r.hasNext()){
-			System.out.println(r.next());
-		}
-	}
-
-	@SuppressWarnings("unchecked")
 	public RandomizedQueue() {
 		size = 0;
 		capacity = 1;
@@ -48,23 +32,23 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		size++;
 	}
 	
-	private void increaseSize() {
+	private void increaseSize() { 
 		capacity *= 2;
-		@SuppressWarnings("unchecked")
 		Item[] newQueue = (Item[]) new Object[capacity];
-		for(int i= 0; i < size; i++) {
+		for (int i = 0; i < size; i++) { 
 			newQueue[i] = queue[i];
 		}
 		queue = newQueue;
 	}
 	
 	public Item dequeue() {
-		if(isEmpty()) {throw new java.util.NoSuchElementException();}
+		if (isEmpty()) { throw new java.util.NoSuchElementException(); }
 		int index = StdRandom.uniform(size);
 		Item item = queue[index];
 		queue[index] = queue[--size];
 		queue[size] = null;
-		if(size < capacity * 0.25) { //half capacity when size of array is a quarter of capacity
+		//half capacity when size of array is a quarter of capacity
+		if (size < capacity * 0.25) { 
 			decreaseSize();
 		}
 		return item;
@@ -72,16 +56,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	
 	private void decreaseSize() {
 		capacity /= 2;
-		@SuppressWarnings("unchecked")
 		Item[] newQueue = (Item[]) new Object[capacity];
-		for(int i = 0; i < size; i++) {
+		for (int i = 0; i < size; i++) {
 			newQueue[i] = queue[i];
 		}
 		queue = newQueue;
 	}
 	
 	public Item sample() {
-		if(isEmpty()){throw new java.util.NoSuchElementException();}
+		if (isEmpty()) { throw new java.util.NoSuchElementException(); } 
 		return queue[StdRandom.uniform(size)];
 	}
 
@@ -89,12 +72,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		return new QueueIterator();
 	}
 	
-	private class QueueIterator implements Iterator<Item>{
-		int current = 0;
-		int[] indicesArray = new int[size];
+	private class QueueIterator implements Iterator<Item> {
+		private int current = 0;
+		private int[] indicesArray = new int[size];
 		
 		public QueueIterator() {
-			for(int i= 0; i < size; i++){
+			for (int i = 0; i < size; i++) {
 				indicesArray[i] = i;
 			}
 			StdRandom.shuffle(indicesArray);
@@ -103,13 +86,28 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		public boolean hasNext() {
 			return current < size; 
 		}
-		public Item next(){
-			if(current >= size){throw new java.util.NoSuchElementException();}
+		public Item next() { 
+			if (current >= size) { throw new java.util.NoSuchElementException(); }
 			return queue[indicesArray[current++]];
 		}
-		public void remove(){
+		public void remove() {
 			throw new java.lang.UnsupportedOperationException();
 		}
 	}
+	
+	public static void main(String[] args) {
+//	     System.out.println(StdRandom.uniform(9));
+	     RandomizedQueue<String> q = new RandomizedQueue<String>(); 
+	     q.enqueue("Hello");
+	     q.enqueue("World");
+	     q.enqueue("Hey");
+	     q.enqueue("Test");
+	     q.enqueue("think");
+         System.out.println("dequeue item is " + q.dequeue());
+         Iterator<String> r = q.iterator();
+         while (r.hasNext()) {
+	         System.out.println(r.next());
+	     }
+	 }
 
 }
